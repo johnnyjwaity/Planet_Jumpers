@@ -8,16 +8,21 @@ public class BreakSprite : MonoBehaviour
     public int size = 4;
     public int PPU = 32;
 
+    public bool breakSprite;
+
     // Use this for initialization
     void Start()
     {
-        BreakUp();
+        //BreakUp();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if(breakSprite){
+            BreakUp();
+            breakSprite = false;
+        }
     }
 
     void BreakUp()
