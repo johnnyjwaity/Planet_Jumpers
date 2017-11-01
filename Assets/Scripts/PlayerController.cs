@@ -11,7 +11,9 @@ public class PlayerController : MonoBehaviour {
     public float speed;
     public float gravityPull;
     public GameObject directionPoint;
-    public GameObject jumpPoint;
+    public GameObject jumpPointR;
+    public GameObject jumpPointL;
+    private string lastMove;
     public float jumpForce;
 
     public bool onLand;
@@ -20,7 +22,7 @@ public class PlayerController : MonoBehaviour {
 
     public float landGravity;
     public float maxSpeed;
-
+    public float spaceMaxSpeed;
     // Use this for initialization
     void Start () {
         myRb = GetComponent<Rigidbody2D>();
@@ -60,12 +62,20 @@ public class PlayerController : MonoBehaviour {
             myRb.gravityScale = 1.0f;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(Vector3.zero), rotationSpeed);
         }
-
-        Debug.Log(myRb.velocity.magnitude);
-        if(myRb.velocity.magnitude > maxSpeed && onLand)
+        float tempMaxSpeed = maxSpeed;
+        if(planet == null)
         {
-            myRb.velocity = myRb.velocity.normalized * maxSpeed;
+            tempMaxSpeed = spaceMaxSpeed;
         }
+        Debug.Log(myRb.velocity.magnitude);
+        if(myRb.velocity.magnitude > tempMaxSpeed && onLand)
+        {
+            myRb.velocity = myRb.velocity.normalized * tempMaxSpeed;
+        }else if(myRb.velocity.magnitude > tempMaxSpeed && planet == null)
+        {
+            myRb.velocity = myRb.velocity.normalized * tempMaxSpeed;
+        }
+
         
 
 
@@ -76,6 +86,7 @@ public class PlayerController : MonoBehaviour {
             //else{
             //    myRb.AddForce(Vector2.left * speed);
             //}
+            lastMove = "right";
             if(onLand){
                 Vector2 direction = transform.position - directionPoint.transform.position;
                 myRb.AddForce(direction.normalized * -speed);  
@@ -94,6 +105,7 @@ public class PlayerController : MonoBehaviour {
             //else{
             //    myRb.AddForce(Vector2.left * speed);
             //}
+            lastMove = "left";
             if (onLand)
             {
                 Vector2 direction = transform.position - oppPoint.transform.position;
@@ -107,9 +119,20 @@ public class PlayerController : MonoBehaviour {
         }
         if (Input.GetKey(KeyCode.Space)){
             if(onLand){
-                gravityPull = 15;
-                Vector2 direction = transform.position - jumpPoint.transform.position;
-                myRb.AddForce(direction.normalized * -jumpForce);   
+                if(lastMove == "right")
+                {
+                    Vector2 direction = transform.position - jumpPointR.transform.position;
+                    myRb.AddForce(direction.normalized * -jumpForce);
+
+                }
+                else if(lastMove == "left")
+                {
+                    Vector2 direction = transform.position - jumpPointL.transform.position;
+                    myRb.AddForce(direction.normalized * -jumpForce);
+
+                }
+                //gravityPull = 15;
+                
             }
 
         }

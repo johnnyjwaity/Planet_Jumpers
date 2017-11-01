@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gem : MonoBehaviour {
-    private float pointsToGive;
+public class ChunkListener : MonoBehaviour {
+    private ChunkBuilder cb;
 	// Use this for initialization
 	void Start () {
-		
+        cb = FindObjectOfType<ChunkBuilder>();
 	}
 	
 	// Update is called once per frame
@@ -17,9 +17,7 @@ public class Gem : MonoBehaviour {
     {
         if(collision.name == "Player")
         {
-            Destroy(gameObject);
+            cb.loadNewChunk();
         }
-        
     }
-
 }

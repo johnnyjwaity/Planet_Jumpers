@@ -31,7 +31,7 @@ public class Planet : MonoBehaviour {
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.GetComponent<PlayerController>().planet == PlanetBody)
+        if(collision.name == "Player" && collision.GetComponent<PlayerController>().planet == PlanetBody)
         {
             collision.GetComponent<PlayerController>().planet = null;
             //collision.GetComponent<PlayerController>().gravityPull = gravity;
