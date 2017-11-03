@@ -144,6 +144,9 @@ public class PlayerController : MonoBehaviour {
         if(collision.gameObject.tag == "Planet"){
             onLand = true;
             gravityPull = 50;
+            if(collision.gameObject.GetComponent<BreakSprite>() != null){
+                collision.gameObject.GetComponent<BreakSprite>().landedOn = true;
+            }
         }
     }
     private void OnCollisionExit2D(Collision2D collision)

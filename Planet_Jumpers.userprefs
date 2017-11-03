@@ -1,5 +1,5 @@
 ﻿<Properties StartupConfiguration="{685E1F31-45A9-DDE1-A63B-181CC02C0342}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Gem.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerController.cs">
     <Files>
       <File FileName="Assets/Scripts/BreakSprite.cs" Line="31" Column="50" />
       <File FileName="Assets/Scripts/Gem.cs" Line="15" Column="3" />

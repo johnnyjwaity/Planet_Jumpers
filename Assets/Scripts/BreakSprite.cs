@@ -8,12 +8,17 @@ public class BreakSprite : MonoBehaviour
     public int size = 4;
     public int PPU = 32;
 
+    private float timer;
+    public bool landedOn;
+    public float timeTillExplosion;
+
     public bool breakSprite;
 
     // Use this for initialization
     void Start()
     {
         //BreakUp();
+        timer = timeTillExplosion;
     }
 
     // Update is called once per frame
@@ -22,6 +27,13 @@ public class BreakSprite : MonoBehaviour
         if(breakSprite){
             BreakUp();
             breakSprite = false;
+        }
+
+        if(landedOn){
+            timer -= Time.deltaTime;
+            if(timer <= 0){
+                breakSprite = true;
+            }
         }
     }
 
@@ -60,5 +72,6 @@ public class BreakSprite : MonoBehaviour
         }
         // Remove the original sprite
         GetComponent<SpriteRenderer>().enabled = false;
+        Destroy(gameObject);
     }
 }

@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
+# Visual Studio for Mac
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Planet_Jumpers", "Planet_Jumpers.csproj", "{685E1F31-45A9-DDE1-A63B-181CC02C0342}"
 EndProject
 Global
