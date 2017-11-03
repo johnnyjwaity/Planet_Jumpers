@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour {
     public float landGravity;
     public float maxSpeed;
     public float spaceMaxSpeed;
+
+    public GameObject startPos;
+    public float YMax;
     // Use this for initialization
     void Start () {
         myRb = GetComponent<Rigidbody2D>();
@@ -30,6 +33,9 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if(transform.position.y < YMax){
+            transform.position = startPos.transform.position;
+        }
         if(planet != null)
         {
             myRb.gravityScale = 0f;
