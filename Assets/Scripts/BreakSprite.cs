@@ -14,11 +14,16 @@ public class BreakSprite : MonoBehaviour
 
     public bool breakSprite;
 
+    public Animator projectionField;
+    private bool startedAnimation;
+
+    public TextMesh timerText;
     // Use this for initialization
     void Start()
     {
         //BreakUp();
         timer = timeTillExplosion;
+        timerText.text = timeTillExplosion + "";
     }
 
     // Update is called once per frame
@@ -30,7 +35,13 @@ public class BreakSprite : MonoBehaviour
         }
 
         if(landedOn){
+            if (!startedAnimation)
+            {
+                projectionField.SetTrigger("Project");
+                startedAnimation = true;
+            }
             timer -= Time.deltaTime;
+            timerText.text = Mathf.Floor(timer+1)+"";
             if(timer <= 0){
                 breakSprite = true;
             }

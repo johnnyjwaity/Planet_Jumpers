@@ -78,7 +78,56 @@ public class PlayerController : MonoBehaviour {
 
         
 
+        if(Input.touchCount > 1)
+        {
+            if((Input.GetTouch(0).position.x < Screen.width/2 || Input.GetTouch(1).position.x < Screen.width / 2)&&(Input.GetTouch(0).position.x > Screen.width / 2 || Input.GetTouch(1).position.x > Screen.width / 2))
+            {
+                if (onLand)
+                {
+                    transform.parent = Camera.main.transform.parent;
+                    if (lastMove == "right")
+                    {
+                        Vector2 direction = transform.position - jumpPointR.transform.position;
+                        myRb.AddForce(direction.normalized * -jumpForce);
 
+                    }
+                    else if (lastMove == "left")
+                    {
+                        Vector2 direction = transform.position - jumpPointL.transform.position;
+                        myRb.AddForce(direction.normalized * -jumpForce);
+
+                    }
+                    //gravityPull = 15;
+
+                }
+            }
+        }
+
+
+        if(Input.touchCount > 0)
+        {
+            if(Input.GetTouch(0).position.x < Screen.width / 2)
+            {
+                lastMove = "left";
+                if (onLand)
+                {
+                    Vector2 direction = transform.position - oppPoint.transform.position;
+                    myRb.AddForce(direction.normalized * -speed);
+                }
+            }
+            else
+            {
+                lastMove = "right";
+                if (onLand)
+                {
+                    Vector2 direction = transform.position - directionPoint.transform.position;
+                    myRb.AddForce(direction.normalized * -speed);
+                }
+            }
+        }
+
+
+        
         if(Input.GetKey("d")){
             //if(planet.transform.position.y <= transform.position.y){
             //    myRb.AddForce(Vector2.right * speed);
@@ -119,7 +168,8 @@ public class PlayerController : MonoBehaviour {
         }
         if (Input.GetKey(KeyCode.Space)){
             if(onLand){
-                if(lastMove == "right")
+                transform.parent = Camera.main.transform.parent;
+                if (lastMove == "right")
                 {
                     Vector2 direction = transform.position - jumpPointR.transform.position;
                     myRb.AddForce(direction.normalized * -jumpForce);
