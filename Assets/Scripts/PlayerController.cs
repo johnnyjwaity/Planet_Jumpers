@@ -26,15 +26,31 @@ public class PlayerController : MonoBehaviour {
 
     public GameObject startPos;
     public float YMax;
+
+    private ChunkBuilder cb;
+    private PointTracker pt;
+    private GameManager gm;
     // Use this for initialization
     void Start () {
         myRb = GetComponent<Rigidbody2D>();
+        cb = FindObjectOfType<ChunkBuilder>();
+        pt = FindObjectOfType<PointTracker>();
+        gm = FindObjectOfType<GameManager>();
+        //startPos = transform.parent.gameObject;
+        //transform.parent = null;
+        Camera.main.GetComponent<CameraController>().player = gameObject;
+        Debug.Log("Y: " + transform.position.y);
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         if(transform.position.y < YMax){
-            transform.position = startPos.transform.position;
+            Debug.Log("Player Died Cause Fell");
+            cb.refreshChunks();
+            pt.restart();
+            gm.endGame();
+            Destroy(gameObject);
+            //transform.position = startPos.transform.position;
         }
         if(planet != null)
         {
@@ -112,24 +128,48 @@ public class PlayerController : MonoBehaviour {
 
         if(Input.touchCount > 0)
         {
-            if(Input.GetTouch(0).position.x < Screen.width / 2)
+            if(Input.touchCount > 1)
             {
-                lastMove = "left";
-                if (onLand)
+                if(lastMove == "left")
                 {
-                    Vector2 direction = transform.position - oppPoint.transform.position;
-                    myRb.AddForce(direction.normalized * -speed);
+                    if (onLand)
+                    {
+                        Vector2 direction = transform.position - oppPoint.transform.position;
+                        myRb.AddForce(direction.normalized * -speed);
+                    }
+                }
+                else
+                {
+                    if (onLand)
+                    {
+                        Vector2 direction = transform.position - directionPoint.transform.position;
+                        myRb.AddForce(direction.normalized * -speed);
+                    }
                 }
             }
             else
             {
-                lastMove = "right";
-                if (onLand)
+                if (Input.GetTouch(0).position.x < Screen.width / 2)
                 {
-                    Vector2 direction = transform.position - directionPoint.transform.position;
-                    myRb.AddForce(direction.normalized * -speed);
+                    lastMove = "left";
+                    if (onLand)
+                    {
+                        Vector2 direction = transform.position - oppPoint.transform.position;
+                        myRb.AddForce(direction.normalized * -speed);
+                    }
+                }
+                else
+                {
+                    lastMove = "right";
+                    if (onLand)
+                    {
+                        Vector2 direction = transform.position - directionPoint.transform.position;
+                        myRb.AddForce(direction.normalized * -speed);
+                    }
                 }
             }
+        
+            
         }
 
 

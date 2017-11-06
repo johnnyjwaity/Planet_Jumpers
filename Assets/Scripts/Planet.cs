@@ -9,10 +9,14 @@ public class Planet : MonoBehaviour {
     public GameObject PlanetBody;
     public GameObject Point;
 
+    private bool gavePoint;
+    private PointTracker pt;
+
 
 	// Use this for initialization
 	void Start () {
-		
+        gavePoint = false;
+        pt = FindObjectOfType<PointTracker>();
 	}
 	
 	// Update is called once per frame
@@ -23,6 +27,11 @@ public class Planet : MonoBehaviour {
     {
         if(collision.gameObject.name == "Player")
         {
+            if(!gavePoint)
+            {
+                pt.addPoints(1);
+                gavePoint = true;
+            }
             collision.GetComponent<PlayerController>().planet = PlanetBody;
             collision.GetComponent<PlayerController>().gravityPull = gravity;
             collision.GetComponent<PlayerController>().point = Point;
