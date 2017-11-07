@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MoneyManager : MonoBehaviour {
+
+    public Text gemDisplay;
 
 	// Use this for initialization
 	void Start () {
@@ -10,12 +13,12 @@ public class MoneyManager : MonoBehaviour {
         {
             PlayerPrefs.SetInt("Gems", 0);
         }
-        PlayerPrefs.SetInt("Gems", 100);
+        //PlayerPrefs.SetInt("Gems", 100);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        gemDisplay.text = "" + getBalance();
 	}
 
     public int getBalance()

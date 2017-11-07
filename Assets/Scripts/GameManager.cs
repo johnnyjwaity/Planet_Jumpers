@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
     public GameObject lastDisplay;
     public GameObject creditsButton;
     public GameObject shopButton;
+    public GameObject introButton;
 
 
     // Use this for initialization
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour {
         lastDisplay.SetActive(false);
         creditsButton.SetActive(false);
         shopButton.SetActive(false);
+        introButton.SetActive(false);
     }
 
     private void startGameCode()
@@ -63,6 +65,7 @@ public class GameManager : MonoBehaviour {
         playerClone.name = "Player";
         gameIsRunning = true;
         sm.playMusic();
+        
         
         
     }
@@ -81,6 +84,7 @@ public class GameManager : MonoBehaviour {
         lastDisplay.SetActive(true);
         creditsButton.SetActive(true);
         shopButton.SetActive(true);
+        introButton.SetActive(true);
     }
 
     public void openCredits()
