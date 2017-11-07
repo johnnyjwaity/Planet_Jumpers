@@ -20,7 +20,7 @@ public class ADManager : MonoBehaviour {
     public void ShowRewardedVideo()
     {
         howManyPlayThroughs++;
-        if(howManyPlayThroughs%2 == 0)
+        if(howManyPlayThroughs%3 == 0)
         {
             ShowOptions options = new ShowOptions();
             options.resultCallback = HandleShowResult;

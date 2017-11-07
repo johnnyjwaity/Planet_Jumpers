@@ -8,6 +8,9 @@ public class PlanetMover : MonoBehaviour {
     public float speed;
     private GameObject currentPoint;
     private int currentPointInt;
+    public int waitTime;
+    private float waitCounter;
+    private bool waiting;
 	// Use this for initialization
 	void Start () {
         currentPoint = point1;
@@ -16,22 +19,43 @@ public class PlanetMover : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Vector3 direction = transform.position - currentPoint.transform.position;
-        direction.Normalize();
-        transform.position += direction * -speed * Time.deltaTime;
+        if (!waiting)
+        {
+            Vector3 direction = transform.position - currentPoint.transform.position;
+            direction.Normalize();
+            transform.position += direction * -speed * Time.deltaTime;
+
+        }
+        
 
 
         if(Vector3.Distance(currentPoint.transform.position, transform.position) < 3)
         {
             if(currentPointInt == 1)
             {
-                currentPointInt = 2;
-                currentPoint = point2;
+                if(waiting == false)
+                {
+                    waitCounter = waitTime;
+                    waiting = true;
+                }
+                
+                
             }
             else
             {
                 currentPointInt = 1;
                 currentPoint = point1;
+            }
+        }
+
+        if (waiting)
+        {
+            waitCounter -= Time.deltaTime;
+            if (waitCounter <= 0)
+            {
+                currentPointInt = 2;
+                currentPoint = point2;
+                waiting = false;
             }
         }
 
