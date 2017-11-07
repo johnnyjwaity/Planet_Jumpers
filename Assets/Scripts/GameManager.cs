@@ -101,5 +101,14 @@ public class GameManager : MonoBehaviour {
         anim.SetBool("shopPanel", false);
     }
 
+    public void openIntro()
+    {
+        anim.SetBool("introPanel", true);
+    }
+    public void closeIntro()
+    {
+        anim.SetBool("introPanel", false);
+    }
+
 
 }
