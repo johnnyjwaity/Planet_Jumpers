@@ -24,11 +24,14 @@ public class GameManager : MonoBehaviour {
     public GameObject introButton;
 
 
+    public Toggle doNotShow;
+
     // Use this for initialization
     void Start () {
         sm = GetComponent<SoundManager>();
         anim = GetComponent<Animator>();
         AnimationDuration = 0.8f;
+        PlayerPrefs.SetInt("FirstTimePlaying", 0);
 	}
 	
 	// Update is called once per frame
@@ -56,6 +59,7 @@ public class GameManager : MonoBehaviour {
         creditsButton.SetActive(false);
         shopButton.SetActive(false);
         introButton.SetActive(false);
+        doNotShow.gameObject.SetActive(true);
     }
 
     private void startGameCode()
@@ -64,6 +68,13 @@ public class GameManager : MonoBehaviour {
         GameObject playerClone = Instantiate(player, startPoint.transform.position, Quaternion.Euler(Vector3.zero));
         playerClone.name = "Player";
         gameIsRunning = true;
+        if(!PlayerPrefs.HasKey("FirstTimePlaying")){
+            PlayerPrefs.SetInt("FirstTimePlaying", 0);
+        }
+
+        if(PlayerPrefs.GetInt("FirstTimePlaying") == 0){
+            openIntro();
+        }
         sm.playMusic();
         
         
@@ -85,6 +96,7 @@ public class GameManager : MonoBehaviour {
         creditsButton.SetActive(true);
         shopButton.SetActive(true);
         introButton.SetActive(true);
+        doNotShow.gameObject.SetActive(false);
     }
 
     public void openCredits()
@@ -112,6 +124,15 @@ public class GameManager : MonoBehaviour {
     public void closeIntro()
     {
         anim.SetBool("introPanel", false);
+    }
+
+    public void doNotShowAgain(){
+        if(doNotShow.isOn){
+            PlayerPrefs.SetInt("FirstTimePlaying", 1);
+        }
+        else{
+            PlayerPrefs.SetInt("FirstTimePlaying", 0);
+        }
     }
 
 

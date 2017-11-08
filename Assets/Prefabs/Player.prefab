@@ -157,7 +157,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1534315593838600}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 607.38, y: 1674.5316, z: 0}
+  m_LocalPosition: {x: 368.92853, y: 133.48952, z: 0}
   m_LocalScale: {x: 0.20722403, y: 0.18165648, z: 0.5822127}
   m_Children:
   - {fileID: 4822748913818742}
@@ -453,7 +453,7 @@ MonoBehaviour:
   directionPoint: {fileID: 1711723626307214}
   jumpPointR: {fileID: 1471404714894184}
   jumpPointL: {fileID: 1059854729874238}
-  jumpForce: 1000
+  jumpForce: 1500
   onLand: 0
   rotationSpeed: 0.1
   landGravity: 150
