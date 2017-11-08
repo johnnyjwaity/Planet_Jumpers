@@ -17,6 +17,10 @@ public class PlayerController : MonoBehaviour {
     public float jumpForce;
 
     public bool onLand;
+    public bool inOrbit;
+    private bool onLandRegistered;
+    private float orbitCounter;
+    private float maxOrbitTime = 2;
     public float rotationSpeed;
 
 
@@ -52,6 +56,37 @@ public class PlayerController : MonoBehaviour {
             Destroy(gameObject);
             //transform.position = startPos.transform.position;
         }
+
+
+
+        if (onLand)
+        {
+            onLandRegistered = false;
+        }
+
+        if(!onLand && planet != null)
+        {
+            if (!onLandRegistered)
+            {
+                onLandRegistered = true;
+                orbitCounter = maxOrbitTime;
+
+            }
+        }
+
+        if (onLandRegistered && inOrbit)
+        {
+            orbitCounter -= Time.deltaTime;
+            if(orbitCounter <= 0)
+            {
+                myRb.velocity = Vector3.zero;
+                onLandRegistered = false;
+                Debug.Log("Set To 0");
+            }
+        }
+
+
+
         if(planet != null)
         {
             myRb.gravityScale = 0f;
@@ -241,6 +276,19 @@ public class PlayerController : MonoBehaviour {
             onLand = true;
             gravityPull = 50;
             if(collision.gameObject.GetComponent<BreakSprite>() != null){
+                collision.gameObject.GetComponent<BreakSprite>().landedOn = true;
+            }
+        }
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+
+        if (collision.gameObject.tag == "Planet" && planet == null)
+        {
+            onLand = true;
+            gravityPull = 50;
+            if (collision.gameObject.GetComponent<BreakSprite>() != null)
+            {
                 collision.gameObject.GetComponent<BreakSprite>().landedOn = true;
             }
         }

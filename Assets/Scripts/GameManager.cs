@@ -22,6 +22,10 @@ public class GameManager : MonoBehaviour {
     public GameObject creditsButton;
     public GameObject shopButton;
     public GameObject introButton;
+    public GameObject volumeButton;
+
+    public Color red;
+    public Color white;
 
 
     public Toggle doNotShow;
@@ -31,11 +35,27 @@ public class GameManager : MonoBehaviour {
         sm = GetComponent<SoundManager>();
         anim = GetComponent<Animator>();
         AnimationDuration = 0.8f;
-        PlayerPrefs.SetInt("FirstTimePlaying", 0);
+        //PlayerPrefs.SetInt("FirstTimePlaying", 0);
+        if (!PlayerPrefs.HasKey("Volume"))
+        {
+            PlayerPrefs.SetInt("Volume", 1);
+        }
+
+        AudioListener.volume = PlayerPrefs.GetInt("Volume");
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        AudioListener.volume = PlayerPrefs.GetInt("Volume");
+        if (PlayerPrefs.GetInt("Volume") == 1)
+        {
+            volumeButton.GetComponent<Button>().GetComponent<Image>().color = white;
+        }
+        else
+        {
+            volumeButton.GetComponent<Button>().GetComponent<Image>().color = red;
+        }
+
         if (timerRunning)
         {
             timerCounter -= Time.deltaTime;
@@ -59,6 +79,7 @@ public class GameManager : MonoBehaviour {
         creditsButton.SetActive(false);
         shopButton.SetActive(false);
         introButton.SetActive(false);
+        volumeButton.SetActive(false);
         doNotShow.gameObject.SetActive(true);
     }
 
@@ -96,6 +117,7 @@ public class GameManager : MonoBehaviour {
         creditsButton.SetActive(true);
         shopButton.SetActive(true);
         introButton.SetActive(true);
+        volumeButton.SetActive(true);
         doNotShow.gameObject.SetActive(false);
     }
 
@@ -135,5 +157,21 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void toggleVolume()
+    {
+        if(PlayerPrefs.GetInt("Volume") == 1)
+        {
+            PlayerPrefs.SetInt("Volume", 0);
+        }
+        else{
+            PlayerPrefs.SetInt("Volume", 1);
+
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.Save();
+    }
 
 }

@@ -38,6 +38,27 @@ public class Planet : MonoBehaviour {
         }
         Debug.Log("In Sphere");
     }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "Player")
+        {
+            if (collision.GetComponent<PlayerController>().planet == null)
+            {
+                if (!gavePoint)
+                {
+                    pt.addPoints(1);
+                    gavePoint = true;
+                }
+                collision.GetComponent<PlayerController>().planet = PlanetBody;
+                collision.GetComponent<PlayerController>().gravityPull = gravity;
+                collision.GetComponent<PlayerController>().point = Point;
+            }
+            collision.GetComponent<PlayerController>().inOrbit = true;
+            
+        }
+        //Debug.Log("In Sphere");
+    }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if(collision.name == "Player" && collision.GetComponent<PlayerController>().planet == PlanetBody)
@@ -45,6 +66,7 @@ public class Planet : MonoBehaviour {
             collision.GetComponent<PlayerController>().planet = null;
             //collision.GetComponent<PlayerController>().gravityPull = gravity;
             collision.GetComponent<PlayerController>().point = null;
+            collision.GetComponent<PlayerController>().inOrbit = false;
         }
         
     }

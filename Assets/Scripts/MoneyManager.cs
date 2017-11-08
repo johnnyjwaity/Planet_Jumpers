@@ -6,9 +6,10 @@ using UnityEngine.UI;
 public class MoneyManager : MonoBehaviour {
 
     public Text gemDisplay;
+    public Text gemDisplay2;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         if (!PlayerPrefs.HasKey("Gems"))
         {
             PlayerPrefs.SetInt("Gems", 0);
@@ -19,7 +20,8 @@ public class MoneyManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         gemDisplay.text = "" + getBalance();
-	}
+        gemDisplay2.text = "" + getBalance();
+    }
 
     public int getBalance()
     {
